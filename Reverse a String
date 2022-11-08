@@ -1,0 +1,12 @@
+class Reverse
+{
+    // str: input string
+    public static String reverseWord(String str)
+    {   
+        String ans = new String();//Creating new ans String
+        for(int i=str.length()-1;i>=0;i--){//Iterating the input string backwards and adding each char into the ans string
+            ans+=str.charAt(i);
+        }
+        return ans;
+    }
+}
