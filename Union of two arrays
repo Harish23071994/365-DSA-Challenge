@@ -1,0 +1,17 @@
+class Solution{
+    public static int doUnion(int a[], int n, int b[], int m) 
+    {
+        HashSet<Integer> ans = new HashSet<>();// Creating new HashSet ans
+        for(int i=0;i<n;i++){//Iterarting through the first array a[] and inserting the distinct elements into it
+            if(!ans.contains(a[i])){
+                ans.add(a[i]);
+            }
+        }
+        for(int i=0;i<m;i++){//Iterarting through the second array b[] and inserting the distinct elements into it
+            if(!ans.contains(b[i])){
+                ans.add(b[i]);
+            }
+        }
+        return ans.size();//return the size of hashset which will be equal to the number of distinct elements in both the arrays
+    }
+}
