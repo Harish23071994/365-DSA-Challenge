@@ -1,0 +1,32 @@
+public class Solution {
+    int [][] ans;   //Creating an answer array
+    public int[][] solve(int[][] A) {
+        int x=0;
+        int y=0;
+        int N = A.length;
+        int M = A[0].length;
+        ans = new int[N][M];
+        maze(A,N,M,x,y);  //Calling Function
+        return ans;
+    }
+    public boolean maze(int[][] A,int N,int M,int x,int y){
+            if(x<0||y<0||x>N-1||y>M-1){  //Base Condition 1- if (x,y)is beyond the matrix
+                return false;
+            }
+            if(A[x][y]==0){   // Base Condition 2-if(x,y) is blocked
+                ans[x][y]=0;
+                return false ;
+            }
+            if(x == N - 1 && y == M - 1){  // Base Condition 3-if the rat reaches the destination
+                ans[x][y]=1;
+                return true;
+            }
+            ans[x][y]=1;// mark x, y as part of ans path
+            if(maze(A,N,M,x+1,y))  // Move forward in x direction 
+                return true;
+            if(maze(A,N,M,x,y+1))  // If moving in x direction doesn't give solution then  Move down in y direction 
+            return true;    // If none of the above movements works then BACKTRACK: unmark x, y as part of solution path 
+            ans[x][y]=0;
+            return false;
+    }
+}
