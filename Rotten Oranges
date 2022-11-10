@@ -1,0 +1,47 @@
+public class Solution {
+    public int solve(int[][] A) {
+        int r = A.length;
+        int c = A[0].length;
+        int day=0;
+        int countofone=0;
+        Queue<int[]>q = new LinkedList<>();
+        for(int i=0;i<r;i++){          */ Iterate the whole A[][] and if any element is 2 add the index into queue
+            for(int j=0;j<c;j++){         if any element is 1 update the countofone+1 */
+                if(A[i][j]==2){
+                    q.add(new int[]{i,j});
+                }
+                if(A[i][j]==1){
+                    countofone++;
+                }
+            }
+        }
+        int[] x={-1,1,0,0};*/Used to find the index for TOP,DOWN,RIGHT and LEFT array of present array*/
+        int[] y={0,0,-1,1};
+        while(!q.isEmpty()){
+            int size=q.size();
+            while(size-->0){
+                int[]temp=q.remove();
+                int i=temp[0];
+                int j=temp[1];
+                for(int k=0;k<4;k++){
+                    int a=i+x[k];
+                    int b=j+y[k];
+                    if(a>=0 && a<r && b>=0 && b<c && A[a][b]==1){
+                            q.add(new int[]{a,b});
+                            A[a][b]=2;
+                            countofone--;
+                    }
+                }
+            }
+            if(q.size()>0){
+                day++;
+            }
+        }
+        if(countofone==0){
+            return day;
+        }
+        else{
+            return -1;
+        }
+    }
+}
