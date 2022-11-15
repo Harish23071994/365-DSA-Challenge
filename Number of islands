@@ -1,0 +1,31 @@
+public class Solution {
+    public int solve(int[][] A) {
+        int N = A.length;
+        int M = A[0].length;
+        int c=0;
+        for(int i=0;i<N;i++){      */Iterate in array and if you find any block with value 1.
+                                     Then that will be an island so increment the count.*/
+            for(int j=0;j<M;j++){
+                if(A[i][j]==1){
+                   c++;
+                   dfs(A,i,j,N,M); //and now we need to check if there is any surrounding land blocks near A[i][j]
+                }
+            }
+        }
+        return c;
+    }
+    public void dfs(int[][]A,int i,int j,int N,int M){
+        if(i<0||j<0||i>N-1||j>M-1||A[i][j]==0){ //Base condition if we land on any invalid block or water return
+            return;
+        }
+        A[i][j]=0;//if we land on valid block then make the value to zero as we do not need this one in future and check in all 8 directions
+        dfs(A,i-1,j,N,M);
+        dfs(A,i+1,j,N,M);
+        dfs(A,i,j-1,N,M);
+        dfs(A,i,j+1,N,M);
+        dfs(A,i-1,j-1,N,M);
+        dfs(A,i+1,j+1,N,M);
+        dfs(A,i-1,j+1,N,M);
+        dfs(A,i+1,j-1,N,M);
+    }
+}
