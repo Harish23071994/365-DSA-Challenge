@@ -1,0 +1,36 @@
+public class Solution {
+    public int solve(int A, int[][] B) {
+        int M = B.length;
+        ArrayList<ArrayList<Integer>> g = new ArrayList<ArrayList<Integer>>();//Creating new ArrayList
+        for(int i=0;i<A+1;i++)
+        {
+            g.add(new ArrayList<Integer>());
+        }
+        for(int i=0;i<M;i++){// Adding edges into the ArrayList
+            g.get(B[i][0]).add(B[i][1]);
+        }
+        Queue<Integer>q = new LinkedList<>();//Creating a Queue for BFS
+        q.add(1);//Insert first node into q
+        boolean[]vis= new boolean[A+1];//Create a boolean visited array to check if the node is already visited or not
+        for(int i=0;i<A+1;i++){
+            vis[i]=false;
+        }
+        vis[1]=true;
+        while(!q.isEmpty()){
+            int cu=q.peek();
+            q.remove();//remove the peek element from q
+            for(int i=0;i<g.get(cu).size();i++){//Get the number of nodes connected with the peek element
+                int cv=g.get(cu).get(i);
+                if(!vis[cv]){//if the connected nodes are not visisted add it into the queue and change the visited status to true
+                    q.add(cv);
+                    vis[cv]=true;
+                }
+            }
+        }
+        if(vis[A]==true)//if the destination node is marked visited then there is definitly a path
+        return 1;
+        else
+        return 0;
+
+    }
+}
