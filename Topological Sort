@@ -1,0 +1,49 @@
+public class Solution {
+    ArrayList<ArrayList<Integer>>g = new ArrayList<ArrayList<Integer>>();
+    public int[] solve(int A, int[][] B) {
+        int[] ans = new int[A];
+        adjacencylist(A,B);//function to create a adjacency list
+        int[] dependency = new int[A+1];
+        dependency[0]=-1;
+        for(int i=1;i<A+1;i++){
+            dependency[i]=0;
+        }
+        dependencycount(dependency,A,B);
+        PriorityQueue<Integer>q = new PriorityQueue<Integer>();
+        for(int i=0;i<A+1;i++){ // if the dependency[i] is equal to zero it means 0 dependency so add into queue
+           if(dependency[i]==0)
+           q.offer(i);
+        }
+        int k=0;
+        while(!q.isEmpty()){
+            int cu=q.poll();//get the q peek and copy it in cu
+            //remove the peek from queue
+            ans[k]=cu;// cu will be an answer so insert it into ans array
+            k++;
+            for(int j=0;j<g.get(cu).size();j++){//get each dependency node for a particular node cu
+                int cv=g.get(cu).get(j);
+                dependency[cv]--;// and reduce their dependecy by 1
+                if(dependency[cv]==0)// if the dependency of cv is zero then add it to queue .Do this till the q is empty
+                q.offer(cv);
+            }
+        }
+        if(k == 0) return new int[0] ;
+        return ans;
+
+    }
+    public void adjacencylist(int A, int[][] B){//Creation of adjacency list
+        int N = B.length;
+        for(int i=0;i<=A;i++){
+            g.add(new ArrayList<Integer>());
+        }
+        for(int i=0;i<N;i++){
+            g.get(B[i][0]).add(B[i][1]);
+        } 
+    }
+    public void dependencycount(int[] dependency, int A,int[][]B){
+        for(int i=0;i<B.length;i++){ 
+            int x= B[i][1];
+            dependency[x]++;
+        }
+    }
+}
