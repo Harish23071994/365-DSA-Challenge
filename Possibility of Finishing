@@ -1,0 +1,47 @@
+public class Solution {
+    ArrayList<ArrayList<Integer>> g = new ArrayList<ArrayList<Integer>>(); 
+    public int solve(int A, int[] B, int[] C) {
+        adjecencylist(A,B,C);// function call to create adjecencylist
+        int[] dependency = new int[A+1];// Creating an array of size A+1 to store the dependency count for each node
+        dependency[0]=-1;
+        for(int i=1;i<A+1;i++){
+            dependency[i]=0;
+        }
+        dependencycount(dependency,A,C);// function call to find the dependency count 
+        Queue<Integer> q = new LinkedList<Integer>();
+         for(int i=0;i<A+1;i++){ // if the dependency[i] is equal to zero it means 0 dependency so add into queue
+           if(dependency[i]==0)
+           q.add(i);
+        }
+        while(!q.isEmpty()){
+            int cu=q.peek();//get the q peek and copy it in cu
+            q.remove(); //remove the peek from queue
+            for(int j=0;j<g.get(cu).size();j++){//get each dependency node for a particular node cu
+                int cv=g.get(cu).get(j);
+                dependency[cv]--;// and reduce their dependecy by 1
+                if(dependency[cv]==0)// if the dependency of cv is zero then add it to queue .Do this till the q is empty
+                q.add(cv);
+            }
+        }
+        for(int i=1;i<A+1;i++){ //if there is any nonzero element in dependecy array it means that there is a cycle and course cannot be completed
+            if(dependency[i]!=0){
+                return 0;
+            }
+        }
+        return 1;
+    }
+    public void adjecencylist(int A, int[] B, int[] C){ //Creating adjecencylist 
+      for(int i=0;i<=A;i++){
+          g.add(new ArrayList<Integer>());
+        }
+        for(int i=0;i<B.length;i++){
+            g.get(B[i]).add(C[i]);
+        }
+    }
+    public void dependencycount(int[] dependency, int A,int[]C){
+        for(int i=0;i<C.length;i++){ 
+            int x= C[i];
+            dependency[x]++;
+        }
+    }
+}
